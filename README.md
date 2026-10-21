@@ -11,8 +11,13 @@ Orange Pi Zero 3W（Allwinner **T736**，sun60iw2 家族）的 **Arch Linux ARM 
 
 - [x] 仓库与构建方案建立
 - [x] Zero 3W 的 Debian 镜像已在真实硬件验证（用于确认内核/U-Boot/bootloader 组合可用）
-- [ ] **Arch Linux ARM 镜像构建**（进行中）
-- [ ] 实机启动验证
+- [x] **Arch Linux ARM 镜像构建完成**（2026-10-21，在 Orange Pi Zero 4 上原生构建）
+  - `arch-zero3w.img` 2.8 GiB
+  - SHA256 `720627cdc57bd07adaa1a9767eda42ad15fe6592c7456ccfc08a08110d6d11f9`
+  - 结构校验通过：MBR 分区起始 LBA 65536、boot0 `eGON` @8KiB、boot_package @16400KiB、
+    `/boot` 含 uImage/uInitrd/Image/initramfs/boot.scr/orangepiEnv.txt/dtb、
+    Arch Linux ARM rootfs、NetworkManager WiFi 预配置、aic8800 固件、SSH 公钥
+- [ ] 实机启动验证（等待烧录到 TF 卡）
 
 ## 硬件
 

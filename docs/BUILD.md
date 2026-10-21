@@ -61,3 +61,15 @@ sudo dd if=output/arch-zero3w.img of=/dev/sdX bs=4M status=progress conv=fsync
 4. vendor U-Boot 2018 的 boot.scr 会去 `ext4load ... /boot/uImage`，注意文件命名
 5. vendor U-Boot 在 `Hit any key` 阶段被串口守护进程写入会中断 autoboot
 6. T736 的 WiFi 固件 aic8800 不在 orangepi-firmware deb 里，必须注入
+
+## 实际构建记录（2026-10-21，在 Orange Pi Zero 4 上原生构建）
+
+- 源码：orangepi-build @ a05b3b4 + `patches/native-arm64.patch`
+- U-Boot：`linux-u-boot-current-orangepizero3w_1.0.2_arm64.deb`（armhf 交叉编译，含 boot0/boot_package）
+- 内核：`linux-image-current-sun60iw2_1.0.2_arm64.deb`（原生 aarch64，Image 26 MB）
+- rootfs：ArchLinuxARM-aarch64-latest（tarball 791 MB），pacman -Syu + NetworkManager/openssh 等
+- initramfs：`mkinitcpio -k 6.6.98-sun60iw2`（mmc/ext4 为内核内建，initramfs 未带模块也可启动）
+- 镜像：2.8 GiB，SHA256 `720627cdc57bd07adaa1a9767eda42ad15fe6592c7456ccfc08a08110d6d11f9`
+- `/boot`：Image / uImage / uInitrd / initramfs-sun60iw2.img / boot.scr / boot.cmd / orangepiEnv.txt / dtb/allwinner
+- 预配置：hostname `orangepizero3w`、用户 `orangepi/orangepi`（wheel）、sshd + NetworkManager、
+  WiFi `GoforLib` 自动连接、aic8800 固件、pad 的 SSH 公钥
